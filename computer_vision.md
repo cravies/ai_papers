@@ -54,3 +54,33 @@ updated with an average of the student in our work."_
 * Sharpening avoids uniform distribution collapse, centering avoids single dimension collapse
 #### Summing it all up
 * The teacher network sees only global crops, creating stable, high-level semantic embeddings. The student network sees local and global crops and learns to predict the teacher's global-level embeddings from local crops, forming a supervised task ("local views must match global views") without external labels. Thus this is a form of self supervised learning, and it produces features that are superior at generalising. The point of this paper is to show that big vision networks trained with a self supervised strategy learn superior features to supervised vision networks, just like self supervised learning in language processing (i.e LLMS) produces stronger models than the supervised case.
+
+## YOLOX [https://arxiv.org/pdf/2107.08430] ✅📜
+* Increase YOLO performance through some different techniques
+* Take Yolov3 with Darknet-53 backbone, make changes
+### Anchor-free detection
+* Previous YOLO uses anchor boxes. These are basically "templates" for different box shapes / sizes.
+* This has a few problems.
+* Firstly, you need to do cluster analysis on your dataset which doesn't work for transfer learning.
+* Secondly, it increases the complexity of the detection heads, and number of predictions, which makes it slow. 
+* YoloX does 1 anchor free prediction per grid instead of 3, based on the object centerpoint.
+* This should mean is better at unusual (size) / (shape) objects
+### Decoupled head 
+* There's a trade off between classification and localization. The features learned for each task are at odds with the other task.
+* So you split the head to avoid this in two, do one for each task, and it performs better
+### SimOTA
+* Label assignment is about matching lables with predictions so you can compute loss
+* YoloX uses an advanced label assignment strategy (SimOTA)
+* Formulates the assigning procedure as an optimal transport problem (OT problem) 
+* Optimal transport is a general mathmatical category of the problem of transporting mass while minimising cost. Can formulate label assignment as this
+* SimOTA takes into account four key principles. 
+ * 1. Loss aware: SimOTA prioritises better quality predictions (compared to GT) through matching degree
+ * Matching degree can be formalised as
+```math
+c_{i,j} = L_{i,j}^{classification} + \lambda L_{i,j}^{regression}
+```
+ * 2. Center prior: prioritise objects close to center of GT
+ * 3. Dynamically select the number of predictions for each GT (top-k)
+ * 4. Globally optimise assignment, not just locally
+### NMS free (end to end) detector
+* They experiment with adding two addidtional conv layers to perform end to end (no nms) but it slightly decreases performance and inference speed and leave it out
