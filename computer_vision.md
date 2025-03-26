@@ -86,7 +86,38 @@ c_{i,j} = L_{i,j}^{classification} + \lambda L_{i,j}^{regression}
 * They experiment with adding two addidtional conv layers to perform end to end (no nms) but it slightly decreases performance and inference speed and leave it out
 
 ## RFLA: Gaussian Receptive based Label Assignment for Tiny Object Detection [https://arxiv.org/abs/2208.08738] 📜
-
+* Object detectors are very bad on tiny objects (defined as < 16x16 pixels)
+* This is true for both anchor based detectors (which use box priors) and anchor free detectors (which use point priors)
+* Both of these approaches misclassify tiny objects as outliers
+* The paper reframes it in terms of prior distributions for both box and point prior detectors
+```math
+p(v|x,y) = \frac{\epsilon(x-x1)\epsilon(x2-x)\epsilon(y-y1)\epsilon(y2-y)}{(x2 - x1)(y2 - y1)}
+```
+Epsilon just tells us its 1 if the term is positive and 0 otherwise. So we can write it as a piecewise probability distribution
+```math
+p(v \mid x, y) =
+\begin{cases}
+\frac{1}{(x_2 - x_1)(y_2 - y_1)}, & \text{if } x_1 \le x \le x_2 \text{ and } y_1 \le y \le y_2, \\
+0, & \text{otherwise.}
+\end{cases}
+```
+I.e it is a uniform distribution.
+* For anchor box detectors the denominator (normalizer) is the area of the box
+```math
+p(v \mid x, y) =
+\begin{cases}
+\frac{1}{w*h}, & \text{if } x_1 \le x \le x_2 \text{ and } y_1 \le y \le y_2, \\
+0, & \text{otherwise.}
+\end{cases}
+```
+* For anchor free (point) detectors the denominator is 1 as the area is a single point
+```math
+p(v \mid x, y) =
+\begin{cases}
+1, & \text{if } x_1 \le x \le x_2 \text{ and } y_1 \le y \le y_2, \\
+0, & \text{otherwise.}
+\end{cases}
+```
 ## FCOS: A simple and strong anchor-free object detector [https://arxiv.org/abs/2006.09214] 📜
 
 ## Fast R-CNN [https://arxiv.org/abs/1504.08083] 📜
