@@ -84,3 +84,11 @@ c_{i,j} = L_{i,j}^{classification} + \lambda L_{i,j}^{regression}
  * 4. Globally optimise assignment, not just locally
 ### NMS free (end to end) detector
 * They experiment with adding two addidtional conv layers to perform end to end (no nms) but it slightly decreases performance and inference speed and leave it out
+
+## RFLA: Gaussian Receptive based Label Assignment for Tiny Object Detection [https://arxiv.org/abs/2208.08738] 📜
+
+## FCOS: A simple and strong anchor-free object detector [https://arxiv.org/abs/2006.09214] 📜
+
+## Fast R-CNN [https://arxiv.org/abs/1504.08083] 📜
+
+## DetectoRS: Detecting Objects with Recursive Feature Pyramid and Switchable Atrous Convolution [https://arxiv.org/abs/2006.02334] 📜
