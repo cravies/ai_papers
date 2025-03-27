@@ -126,6 +126,14 @@ p(v \mid x, y) =
 * Therefore, they introduce not a box or point based uniform distribution prior, but a gaussian one. 
 * This comes from the fact that the effective receptive field of CNNs is gaussian distributed
 * As the probability is nonzero at every point this fixes the "no overlap" problem
+* "Combining the Gaussian receptive field and
+its customized label assignment strategy can significantly alleviate the imbalance
+problem raised by existing prior and measurement for tiny objects."
+* "The multi-resolution image pyramid is a basic way of
+multi-scale learning."
+* "One basic principle that mainstream object detectors obey is dividing and con-
+quering, namely detecting objects of different scales on the different layers of
+FPN"
 
 ## FCOS: A simple and strong anchor-free object detector [https://arxiv.org/abs/2006.09214] 📜
 
