@@ -118,6 +118,15 @@ p(v \mid x, y) =
 0, & \text{otherwise.}
 \end{cases}
 ```
+![Comparing Different priors](assets/priors.png)
+* A big problem is that label assignment metrics depend on there being overlap between the non zero part of the distribution and the ground truth location
+* I.e IOU for anchor boxes - there is often no IOU
+* And for centernees, there is often no anchor points inside the tiny object
+* Therefore, the network pretrained on for example COCO, will not learn circuits for tiny objects, it's not getting a good training signal.
+* Therefore, they introduce not a box or point based uniform distribution prior, but a gaussian one. 
+* This comes from the fact that the effective receptive field of CNNs is gaussian distributed
+* As the probability is nonzero at every point this fixes the "no overlap" problem
+
 ## FCOS: A simple and strong anchor-free object detector [https://arxiv.org/abs/2006.09214] 📜
 
 ## Fast R-CNN [https://arxiv.org/abs/1504.08083] 📜
